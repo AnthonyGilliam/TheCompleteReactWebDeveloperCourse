@@ -11,7 +11,7 @@ const app = {
     options: ['One', 'Two']
 }
 
-var template = (
+const template = (
     <div>
         <h1>{app.title}</h1>
         {app.subtitle && <h2>{app.subtitle}</h2>}
@@ -19,19 +19,19 @@ var template = (
     </div>
 );
 
-var user = {
+const user = {
     name: 'Anthony',
     age: 35,
     location: 'Atlanta'
 }
 
-var getLocation = (location) => {
+const getLocation = (location) => {
                             if (location)
                                 return <p>Location: {location}</p>
                         }
 
 // Crate a temlate2 var JSX expression
-var template2 = (
+const template2 = (
     <div>
         <h1>{user.name || 'Anonymous'}</h1>
         {(user.age && user.age > 18) && <p>Age: {user.age}</p>}
@@ -39,6 +39,6 @@ var template2 = (
     </div>
 );
 
-var appRoot = document.getElementById('app');
+const appRoot = document.getElementById('app');
 
 ReactDOM.render(template, appRoot);
