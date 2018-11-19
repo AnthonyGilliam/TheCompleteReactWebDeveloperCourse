@@ -1,50 +1,56 @@
 console.log('App.js is running!');
 
 // JSX - JavaScript XML
-// only render subtitle and p tag if subtitle exists - logical and operator
-// render new p tag - if options has any elements else "No options"
 const app = {
     title: 'Indecision App',
     subtitle: 'Put your life in the hands of a computer',
-    options: ['One', 'Two']
-}
-
-const template = (
-    <div>
-        <h1>{app.title}</h1>
-        {app.subtitle && <h2>{app.subtitle}</h2>}
-        <p>{(app.options && app.options.length) ? 'Here are your options' : 'No options'}</p>
-    </div>
-);
-
-// Crate a temlate2 var JSX expression
-let count = 0;
-const addOne = () => {
-    count++;
-    renderCounterApp();
-};
-const minusOne = () => { 
-    count--;
-    renderCounterApp();
-};
-const reset = () => {
-    count = 0;
-    renderCounterApp();
+    options: []
 };
 
-const appRoot = document.getElementById('app');
+const numbers = [55, 101, 1000];
 
-const renderCounterApp = () => {
-    const template2 = (
+const onFormSubmit = (e) => {
+    e.preventDefault();
+    const option = e.target.elements.option.value;
+    if (option) {
+        app.options.push(option);
+        e.target.elements.option.value = '';
+        console.log(app.options);
+    }
+    render();
+};
+
+const onRemoveAll = () => {
+    app.options = [];
+    console.log(app.options);
+    render();
+};
+
+// Create a render function that renders the new JSX
+// Call it right away
+// Call it after item added to options array 
+const render = () => {
+    const template = (
         <div>
-            <h1>Count: {count}</h1>
-            <button onClick={addOne} className="button">+1</button>
-            <button onClick={minusOne} className="button">-1</button>
-            <button onClick={reset} className="button">reset</button>
+            <h1>{app.title}</h1>
+            {app.subtitle && <h2>{app.subtitle}</h2>}
+            <p>{(app.options && app.options.length) ? 'Here are your options' : 'No options'}</p>
+            <p>{app.options.length}</p>
+            <button onClick={onRemoveAll}>Remove All</button>
+            <ol>
+                {/*Arrays are fully supported by JSX*/}
+                {/*As with any JSX expression; nulls, undefined, and booleans do not render at all*/}
+                {app.options.map((opt, i) => <li key={i}>{opt}</li>)}
+            </ol>
+            <form onSubmit={onFormSubmit}>
+                <input type="text" name="option"/>
+                <button>Add Option</button>
+            </form>
         </div>
-    );
+    );    
 
-    ReactDOM.render(template2, appRoot);
+    const appRoot = document.getElementById('app');
+    ReactDOM.render(template, appRoot);
 };
 
-renderCounterApp();
+render();

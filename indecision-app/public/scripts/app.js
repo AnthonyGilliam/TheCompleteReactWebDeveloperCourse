@@ -3,79 +3,88 @@
 console.log('App.js is running!');
 
 // JSX - JavaScript XML
-// only render subtitle and p tag if subtitle exists - logical and operator
-// render new p tag - if options has any elements else "No options"
 var app = {
     title: 'Indecision App',
     subtitle: 'Put your life in the hands of a computer',
-    options: ['One', 'Two']
+    options: []
 };
 
-var template = React.createElement(
-    'div',
-    null,
-    React.createElement(
-        'h1',
-        null,
-        app.title
-    ),
-    app.subtitle && React.createElement(
-        'h2',
-        null,
-        app.subtitle
-    ),
-    React.createElement(
-        'p',
-        null,
-        app.options && app.options.length ? 'Here are your options' : 'No options'
-    )
-);
+var numbers = [55, 101, 1000];
 
-// Crate a temlate2 var JSX expression
-var count = 0;
-var addOne = function addOne() {
-    count++;
-    renderCounterApp();
-};
-var minusOne = function minusOne() {
-    count--;
-    renderCounterApp();
-};
-var reset = function reset() {
-    count = 0;
-    renderCounterApp();
+var onFormSubmit = function onFormSubmit(e) {
+    e.preventDefault();
+    var option = e.target.elements.option.value;
+    if (option) {
+        app.options.push(option);
+        e.target.elements.option.value = '';
+        console.log(app.options);
+    }
+    render();
 };
 
-var appRoot = document.getElementById('app');
+var onRemoveAll = function onRemoveAll() {
+    app.options = [];
+    console.log(app.options);
+    render();
+};
 
-var renderCounterApp = function renderCounterApp() {
-    var template2 = React.createElement(
+// Create a render function that renders the new JSX
+// Call it right away
+// Call it after item added to options array 
+var render = function render() {
+    var template = React.createElement(
         'div',
         null,
         React.createElement(
             'h1',
             null,
-            'Count: ',
-            count
+            app.title
+        ),
+        app.subtitle && React.createElement(
+            'h2',
+            null,
+            app.subtitle
+        ),
+        React.createElement(
+            'p',
+            null,
+            app.options && app.options.length ? 'Here are your options' : 'No options'
+        ),
+        React.createElement(
+            'p',
+            null,
+            app.options.length
         ),
         React.createElement(
             'button',
-            { onClick: addOne, className: 'button' },
-            '+1'
+            { onClick: onRemoveAll },
+            'Remove All'
         ),
         React.createElement(
-            'button',
-            { onClick: minusOne, className: 'button' },
-            '-1'
+            'ol',
+            null,
+            app.options.map(function (opt, i) {
+                return React.createElement(
+                    'li',
+                    { key: i },
+                    opt
+                );
+            })
         ),
         React.createElement(
-            'button',
-            { onClick: reset, className: 'button' },
-            'reset'
+            'form',
+            { onSubmit: onFormSubmit },
+            React.createElement('input', { type: 'text', name: 'option' }),
+            React.createElement(
+                'button',
+                null,
+                'Add Option'
+            )
         )
     );
 
-    ReactDOM.render(template2, appRoot);
+    var appRoot = document.getElementById('app');
+    ReactDOM.render(template, appRoot);
 };
 
-renderCounterApp();
+render();
