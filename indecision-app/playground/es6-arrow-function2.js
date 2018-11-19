@@ -60,8 +60,8 @@ console.log(user3.printPlacesLived());
 
 // Challenge
 const multiplier = {
-    numbers: [1, 2, 3],
-    multiplyBy: 2,
+    numbers: [10, 20, 30],
+    multiplyBy: 3,
     multiply () {
         return this.numbers.map(num => num * this.multiplyBy);
     }

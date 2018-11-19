@@ -1,10 +1,8 @@
 console.log('App.js is running!');
 
 // JSX - JavaScript XML
-
 // only render subtitle and p tag if subtitle exists - logical and operator
 // render new p tag - if options has any elements else "No options"
-
 const app = {
     title: 'Indecision App',
     subtitle: 'Put your life in the hands of a computer',
@@ -19,26 +17,34 @@ const template = (
     </div>
 );
 
-const user = {
-    name: 'Anthony',
-    age: 35,
-    location: 'Atlanta'
-}
-
-const getLocation = (location) => {
-                            if (location)
-                                return <p>Location: {location}</p>
-                        }
-
 // Crate a temlate2 var JSX expression
-const template2 = (
-    <div>
-        <h1>{user.name || 'Anonymous'}</h1>
-        {(user.age && user.age > 18) && <p>Age: {user.age}</p>}
-        {getLocation(user.location)}
-    </div>
-);
+let count = 0;
+const addOne = () => {
+    count++;
+    renderCounterApp();
+};
+const minusOne = () => { 
+    count--;
+    renderCounterApp();
+};
+const reset = () => {
+    count = 0;
+    renderCounterApp();
+};
 
 const appRoot = document.getElementById('app');
 
-ReactDOM.render(template, appRoot);
+const renderCounterApp = () => {
+    const template2 = (
+        <div>
+            <h1>Count: {count}</h1>
+            <button onClick={addOne} className="button">+1</button>
+            <button onClick={minusOne} className="button">-1</button>
+            <button onClick={reset} className="button">reset</button>
+        </div>
+    );
+
+    ReactDOM.render(template2, appRoot);
+};
+
+renderCounterApp();
