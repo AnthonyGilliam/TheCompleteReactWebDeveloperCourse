@@ -1,35 +1,112 @@
-"use strict";
+'use strict';
 
-var details = "These are some details to be toggled from visible to invisible";
-var visible = false;
-var onToggleVisibility = function onToggleVisibility() {
-    visible = !visible;
-    render();
-};
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var render = function render() {
-    var template = React.createElement(
-        "section",
-        { id: "main" },
-        React.createElement(
-            "h1",
-            null,
-            "Visibility Toggle"
-        ),
-        React.createElement(
-            "button",
-            { onClick: onToggleVisibility },
-            visible ? "Hide details" : "Show details"
-        ),
-        visible && React.createElement(
-            "p",
-            null,
-            details
-        )
-    );
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-    var appRoot = document.getElementById('app');
-    ReactDOM.render(template, appRoot);
-};
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-render();
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Person = function () {
+    function Person() {
+        var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'Anonymous';
+        var age = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+        _classCallCheck(this, Person);
+
+        this.name = name;
+        this.age = age;
+    }
+
+    _createClass(Person, [{
+        key: 'getGreeting',
+        value: function getGreeting() {
+            return 'Hi, I am ' + this.name + '!';
+        }
+    }, {
+        key: 'getDescription',
+        value: function getDescription() {
+            return this.name + ' is ' + this.age + ' old.';
+        }
+    }]);
+
+    return Person;
+}();
+
+// Use extends to declare that a class inherits from another class
+
+
+var Student = function (_Person) {
+    _inherits(Student, _Person);
+
+    function Student(name, age, major) {
+        _classCallCheck(this, Student);
+
+        var _this = _possibleConstructorReturn(this, (Student.__proto__ || Object.getPrototypeOf(Student)).call(this, name, age));
+        // Call super() to pass parameters into parent constructor
+
+
+        _this.major = major;
+        _this.hasMajor = !!_this.major;
+        return _this;
+    }
+
+    // Declare a method with the same name as a method in the parent class
+    // to override it
+
+
+    _createClass(Student, [{
+        key: 'getDescription',
+        value: function getDescription() {
+            // Use super to access parent members
+            var description = _get(Student.prototype.__proto__ || Object.getPrototypeOf(Student.prototype), 'getDescription', this).call(this);
+            description += this.hasMajor ? ' Their major is ' + this.major : '';
+            return description;
+        }
+    }]);
+
+    return Student;
+}(Person);
+
+var Traveler = function (_Person2) {
+    _inherits(Traveler, _Person2);
+
+    function Traveler(name, age, homeLocation) {
+        _classCallCheck(this, Traveler);
+
+        var _this2 = _possibleConstructorReturn(this, (Traveler.__proto__ || Object.getPrototypeOf(Traveler)).call(this, name, age));
+
+        _this2.homeLocation = homeLocation;
+        _this2.hasHomeLocation = !!homeLocation;
+        return _this2;
+    }
+
+    _createClass(Traveler, [{
+        key: 'getDescription',
+        value: function getDescription() {
+            var description = _get(Traveler.prototype.__proto__ || Object.getPrototypeOf(Traveler.prototype), 'getDescription', this).call(this);
+            description += this.hasHomeLocation ? ' Their home location is ' + this.homeLocation : '';
+            return description;
+        }
+    }]);
+
+    return Traveler;
+}(Person);
+
+var me = new Student('Andrew Mead', 27, 'Computer Science');
+console.log(me);
+console.log(me.getGreeting());
+console.log(me.getDescription());
+
+var other = new Student();
+console.log(other);
+console.log(other.getGreeting());
+console.log(other.getDescription());
+
+var traveler = new Traveler('Anthony', 35, 'Denver, CO');
+console.log(traveler);
+console.log(traveler.getGreeting());
+console.log(traveler.getDescription());
