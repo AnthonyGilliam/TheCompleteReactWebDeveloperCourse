@@ -26,6 +26,12 @@ const onRemoveAll = () => {
     render();
 };
 
+const onMakeDecision = () => {
+    const randomNum = Math.floor(Math.random() * app.options.length);
+    const option = app.options[randomNum];
+    alert(option);
+};
+
 // Create a render function that renders the new JSX
 // Call it right away
 // Call it after item added to options array 
@@ -35,7 +41,7 @@ const render = () => {
             <h1>{app.title}</h1>
             {app.subtitle && <h2>{app.subtitle}</h2>}
             <p>{(app.options && app.options.length) ? 'Here are your options' : 'No options'}</p>
-            <p>{app.options.length}</p>
+            <button disabled={!app.options.length} onClick={onMakeDecision}>What should I do?</button>
             <button onClick={onRemoveAll}>Remove All</button>
             <ol>
                 {/*Arrays are fully supported by JSX*/}
