@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -18,14 +18,17 @@ var IndecisionApp = function (_React$Component) {
     }
 
     _createClass(IndecisionApp, [{
-        key: "render",
+        key: 'render',
         value: function render() {
+            var title = 'Indecision';
+            var subtitle = 'Put your life in the hands of a computer!';
+            var options = ['Thing one', 'Thing two', 'Thing three'];
             return React.createElement(
-                "section",
-                { id: "main" },
-                React.createElement(Header, null),
+                'section',
+                { id: 'main' },
+                React.createElement(Header, { id: 'home_header', title: title, subtitle: subtitle }),
                 React.createElement(Action, null),
-                React.createElement(Options, null),
+                React.createElement(Options, { options: options }),
                 React.createElement(AddOption, null)
             );
         }
@@ -44,20 +47,21 @@ var Header = function (_React$Component2) {
     }
 
     _createClass(Header, [{
-        key: "render",
+        key: 'render',
         value: function render() {
+            console.log(this.props);
             return React.createElement(
-                "header",
-                null,
+                'header',
+                { id: this.props.id },
                 React.createElement(
-                    "h1",
+                    'h1',
                     null,
-                    "Indecision"
+                    this.props.title
                 ),
                 React.createElement(
-                    "h2",
+                    'h2',
                     null,
-                    "Put your life in the hands of a computer"
+                    this.props.subtitle
                 )
             );
         }
@@ -76,15 +80,15 @@ var Action = function (_React$Component3) {
     }
 
     _createClass(Action, [{
-        key: "render",
+        key: 'render',
         value: function render() {
             return React.createElement(
-                "section",
-                { id: "Action" },
+                'section',
+                { id: 'Action' },
                 React.createElement(
-                    "button",
+                    'button',
                     null,
-                    "What should I do?"
+                    'What should I do?'
                 )
             );
         }
@@ -103,15 +107,21 @@ var Options = function (_React$Component4) {
     }
 
     _createClass(Options, [{
-        key: "render",
+        key: 'render',
         value: function render() {
             return React.createElement(
-                "section",
-                { id: "Options" },
+                'section',
+                { id: 'Options' },
                 React.createElement(
-                    "ul",
+                    'ul',
                     null,
-                    React.createElement(Option, null)
+                    this.props.options.length ? this.props.options.map(function (opt, i) {
+                        return React.createElement(Option, { name: opt, key: i });
+                    }) : React.createElement(
+                        'p',
+                        null,
+                        'No options currently available'
+                    )
                 )
             );
         }
@@ -120,8 +130,9 @@ var Options = function (_React$Component4) {
     return Options;
 }(React.Component);
 
-// Option -> Option component here
+4;
 
+// Option -> Option component here
 
 var Option = function (_React$Component5) {
     _inherits(Option, _React$Component5);
@@ -133,12 +144,12 @@ var Option = function (_React$Component5) {
     }
 
     _createClass(Option, [{
-        key: "render",
+        key: 'render',
         value: function render() {
             return React.createElement(
-                "li",
-                { className: "option", key: "key" },
-                "Option"
+                'li',
+                { className: 'option' },
+                this.props.name
             );
         }
     }]);
@@ -156,19 +167,19 @@ var AddOption = function (_React$Component6) {
     }
 
     _createClass(AddOption, [{
-        key: "render",
+        key: 'render',
         value: function render() {
             return React.createElement(
-                "section",
-                { id: "AddOption" },
+                'section',
+                { id: 'AddOption' },
                 React.createElement(
-                    "form",
+                    'form',
                     null,
-                    React.createElement("input", { type: "text", id: "add_option_input" }),
+                    React.createElement('input', { type: 'text', id: 'add_option_input' }),
                     React.createElement(
-                        "button",
-                        { id: "add_option_button" },
-                        "Add Option"
+                        'button',
+                        { id: 'add_option_button' },
+                        'Add Option'
                     )
                 )
             );
