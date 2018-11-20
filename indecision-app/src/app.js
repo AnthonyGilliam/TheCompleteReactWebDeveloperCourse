@@ -27,48 +27,60 @@ class Header extends React.Component {
 }
 
 class Action extends React.Component {
+    handlePick() {
+        alert('handlePick')
+    }
     render() {
         return (
             <section id="Action">
-                <button>What should I do?</button>
+                <button onClick={this.handlePick}>What should I do?</button>
             </section>
         );
     }
 }
 
 class Options extends React.Component {
+    handleRemoveAll() {
+        alert('handleRemoveAll');
+    }
     render() {
         return (
             <section id="Options">
-                <ul>
-                    {
-                        this.props.options.length
-                            ? this.props.options.map((opt, i) => {
-                                return (<Option name={opt} key={i} />);
+                <button onClick={this.handleRemoveAll}>Remove All</button>
+                {
+                    this.props.options.length
+                        ? this.props.options.map((opt, i) => {
+                            return (<Option name={opt} key={i} />);
                             })
-                            : <p>No options currently available</p>
-                    }
-                </ul>
+                        : <p>No options currently available</p>
+                }
             </section>
         );
     };
-}4
+}
 
-// Option -> Option component here
 class Option extends React.Component {
     render() {
         return (
-            <li className="option">{this.props.name}</li>
+            <div className="option">{this.props.name}</div>
         );
     }
 }
 
 class AddOption extends React.Component {
+    // Argument e holds the target property which refers to the form and its inputs
+    handleAddOption(e) {
+        e.preventDefault();
+        const option = e.target.option.value.trim();
+        console.log(option);
+        if (option)
+            alert('handleAddOption');
+    }
     render() {
         return (
             <section id="AddOption">
-                <form>
-                    <input type="text" id="add_option_input" />
+                <form onSubmit={this.handleAddOption}>
+                    <input type="text" name="option" />
                     <button id="add_option_button">Add Option</button>
                 </form>  
             </section>

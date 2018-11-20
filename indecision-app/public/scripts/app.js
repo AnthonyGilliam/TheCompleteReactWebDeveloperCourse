@@ -80,6 +80,11 @@ var Action = function (_React$Component3) {
     }
 
     _createClass(Action, [{
+        key: 'handlePick',
+        value: function handlePick() {
+            alert('handlePick');
+        }
+    }, {
         key: 'render',
         value: function render() {
             return React.createElement(
@@ -87,7 +92,7 @@ var Action = function (_React$Component3) {
                 { id: 'Action' },
                 React.createElement(
                     'button',
-                    null,
+                    { onClick: this.handlePick },
                     'What should I do?'
                 )
             );
@@ -107,21 +112,27 @@ var Options = function (_React$Component4) {
     }
 
     _createClass(Options, [{
+        key: 'handleRemoveAll',
+        value: function handleRemoveAll() {
+            alert('handleRemoveAll');
+        }
+    }, {
         key: 'render',
         value: function render() {
             return React.createElement(
                 'section',
                 { id: 'Options' },
                 React.createElement(
-                    'ul',
+                    'button',
+                    { onClick: this.handleRemoveAll },
+                    'Remove All'
+                ),
+                this.props.options.length ? this.props.options.map(function (opt, i) {
+                    return React.createElement(Option, { name: opt, key: i });
+                }) : React.createElement(
+                    'p',
                     null,
-                    this.props.options.length ? this.props.options.map(function (opt, i) {
-                        return React.createElement(Option, { name: opt, key: i });
-                    }) : React.createElement(
-                        'p',
-                        null,
-                        'No options currently available'
-                    )
+                    'No options currently available'
                 )
             );
         }
@@ -129,10 +140,6 @@ var Options = function (_React$Component4) {
 
     return Options;
 }(React.Component);
-
-4;
-
-// Option -> Option component here
 
 var Option = function (_React$Component5) {
     _inherits(Option, _React$Component5);
@@ -147,7 +154,7 @@ var Option = function (_React$Component5) {
         key: 'render',
         value: function render() {
             return React.createElement(
-                'li',
+                'div',
                 { className: 'option' },
                 this.props.name
             );
@@ -167,6 +174,16 @@ var AddOption = function (_React$Component6) {
     }
 
     _createClass(AddOption, [{
+        key: 'handleAddOption',
+
+        // Argument e holds the target property which refers to the form and its inputs
+        value: function handleAddOption(e) {
+            e.preventDefault();
+            var option = e.target.option.value.trim();
+            console.log(option);
+            if (option) alert('handleAddOption');
+        }
+    }, {
         key: 'render',
         value: function render() {
             return React.createElement(
@@ -174,8 +191,8 @@ var AddOption = function (_React$Component6) {
                 { id: 'AddOption' },
                 React.createElement(
                     'form',
-                    null,
-                    React.createElement('input', { type: 'text', id: 'add_option_input' }),
+                    { onSubmit: this.handleAddOption },
+                    React.createElement('input', { type: 'text', name: 'option' }),
                     React.createElement(
                         'button',
                         { id: 'add_option_button' },
