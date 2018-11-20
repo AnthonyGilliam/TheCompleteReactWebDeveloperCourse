@@ -1,62 +1,59 @@
-console.log('App.js is running!');
-
-// JSX - JavaScript XML
-const app = {
-    title: 'Indecision App',
-    subtitle: 'Put your life in the hands of a computer',
-    options: []
-};
-
-const numbers = [55, 101, 1000];
-
-const onFormSubmit = (e) => {
-    e.preventDefault();
-    const option = e.target.elements.option.value;
-    if (option) {
-        app.options.push(option);
-        e.target.elements.option.value = '';
-        console.log(app.options);
+class Header extends React.Component {
+    render() {
+        return (
+            <header>
+                <h1>Indecision</h1>
+                <h2>Put your life in the hands of a computer</h2>
+            </header>
+        );
     }
-    render();
-};
+}
 
-const onRemoveAll = () => {
-    app.options = [];
-    console.log(app.options);
-    render();
-};
+class Action extends React.Component {
+    render() {
+        return (
+            <section id="Action">
+                <button>What should I do?</button>
+            </section>
+        );
+    }
+}
 
-const onMakeDecision = () => {
-    const randomNum = Math.floor(Math.random() * app.options.length);
-    const option = app.options[randomNum];
-    alert(option);
-};
+// Options -> Options component here
+class Options extends React.Component {
+    render() {
+        return (
+            <section id="Options">
+                <ul>
+                    <li>Option 1</li>
+                    <li>Option 2</li>
+                </ul>
+            </section>
+        );
+    };
+}
 
-// Create a render function that renders the new JSX
-// Call it right away
-// Call it after item added to options array 
-const render = () => {
-    const template = (
-        <div>
-            <h1>{app.title}</h1>
-            {app.subtitle && <h2>{app.subtitle}</h2>}
-            <p>{(app.options && app.options.length) ? 'Here are your options' : 'No options'}</p>
-            <button disabled={!app.options.length} onClick={onMakeDecision}>What should I do?</button>
-            <button onClick={onRemoveAll}>Remove All</button>
-            <ol>
-                {/*Arrays are fully supported by JSX*/}
-                {/*As with any JSX expression; nulls, undefined, and booleans do not render at all*/}
-                {app.options.map((opt, i) => <li key={i}>{opt}</li>)}
-            </ol>
-            <form onSubmit={onFormSubmit}>
-                <input type="text" name="option"/>
-                <button>Add Option</button>
-            </form>
-        </div>
-    );    
+// AddOption -> AddOption component here 
+class AddOption extends React.Component {
+    render() {
+        return (
+            <section id="AddOption">
+                <form>
+                    <input type="text" id="add_option_input" />
+                    <button id="add_option_button">Add Option</button>
+                </form>  
+            </section>
+        )
+    };
+}
 
-    const appRoot = document.getElementById('app');
-    ReactDOM.render(template, appRoot);
-};
+const jsx = (
+    <div>
+        <Header />
+        <Action />
+        <Options />
+        <AddOption />
+    </div>
+);
 
-render();
+ReactDOM.render(jsx, document.getElementById('app'));
