@@ -1,3 +1,14 @@
+const obj = {
+    name: 'Vikram',
+    getName() {
+        return this.name;
+    }
+}
+
+const getName = obj.getName.bind(obj);
+
+console.log(getName());
+
 class IndecisionApp extends React.Component {
     render() {
         const title = 'Indecision';
@@ -40,7 +51,14 @@ class Action extends React.Component {
 }
 
 class Options extends React.Component {
+    constructor(props) {
+        super(props);
+        // Methods consuming props must manually bind this to keep proper context
+        this.handleRemoveAll = this.handleRemoveAll.bind(this);
+    }
     handleRemoveAll() {
+        // If no constructor, the this binding is lost, this is now null
+        console.log(this.props.options);
         alert('handleRemoveAll');
     }
     render() {
